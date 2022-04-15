@@ -15,21 +15,22 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     # gives the job access to the secrets and protection settings scoped to the staging environment
-    environment: Develop
+    environment: Development
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       # Runs multiple commands using the runners shell
-      - name: Set up Flyway
-        run: | 
-          curl -L https://repo1.maven.org/maven2/org/flywaydb/flyway-commandline/8.5.8/flyway-commandline-8.5.8.tar.gz -o flyway-commandline-8.5.8.tar.gz \
-          && tar -xzf flyway-commandline-8.5.8.tar.gz --strip-components=1 \
-          && rm flyway-commandline-8.5.8.tar.gz
-      - run: PATH=/flyway:$PATH
-      - run: |
-          ./flyway -url="jdbc:postgresql://${{secrets.DB_HOST}}:5432/${{secrets.DB_NAME}}" \ 
-          -user="${{secrets.DB_USER}}" \
-          -password="${{secrets.DB_PASS}}" \
-          -locations="filesystem:migrations" info \
-          migrate
+      - name: Flyway Migration
+  # You may pin to the exact commit or the version.
+  # uses: joshuaavalon/flyway-action@3a2d033344e62315c7b4d2e1b6c9fcfea798e3e6
+        uses: joshuaavalon/flyway-action@v2
+        with: 
+    # The jdbc url to use to connect to the database
+         url: jdbc:postgresql://${{secrets.DB_HOST}}:5432/${{secrets.DB_NAME}}
+    # The user to use to connect to the database
+         user: ${{secrets.DB_USER}}
+    # The password to use to connect to the database
+         password: ${{secrets.DB_PASS}}
+    # Comma-separated list of locations to scan recursively for migrations
+         locations: "filesystem:migrations"
