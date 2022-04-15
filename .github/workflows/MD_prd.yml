@@ -1,0 +1,27 @@
+name: Manual deploy to movieapp-prd
+
+on:
+  workflow_dispatch
+
+jobs:
+  def:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    environment: Production
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Deploy to Heroku
+      uses: AkhileshNS/heroku-deploy@v3.12.12
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_email: plazo1975@gmail.com
+        heroku_app_name: movieapp-prd
+        branch: main
+        dontuseforce: false
+        dontautocreate: true
+        usedocker: false
+        docker_heroku_process_type: web
+        region: Europe
+        stack: heroku-20
