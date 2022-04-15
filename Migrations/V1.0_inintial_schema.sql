@@ -39,3 +39,4 @@ CREATE TABLE IF NOT EXISTS public."Movies"
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public."Movies"
+-- 
