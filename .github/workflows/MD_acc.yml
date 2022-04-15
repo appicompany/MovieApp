@@ -1,0 +1,27 @@
+name: Manual deploy to movieapp-acc
+
+on:
+  workflow_dispatch
+
+jobs:
+  def:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    environment: Staging
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Deploy to Heroku
+      uses: AkhileshNS/heroku-deploy@v3.12.12
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_email: plazo1975@gmail.com
+        heroku_app_name: movieapp-acc
+        branch: staging
+        dontuseforce: false
+        dontautocreate: true
+        usedocker: false
+        docker_heroku_process_type: web
+        region: Europe
+        stack: heroku-20
