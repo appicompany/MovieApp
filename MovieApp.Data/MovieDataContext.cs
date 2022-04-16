@@ -10,7 +10,7 @@ namespace MovieApp.Data
     public class MovieDataContext : Microsoft.EntityFrameworkCore.DbContext
     {
 
-        public MovieDataContext(DbContextOptions<MovieDataContext> options):
+        public MovieDataContext(DbContextOptions<MovieDataContext> options) :
 
             base(options) 
         {
