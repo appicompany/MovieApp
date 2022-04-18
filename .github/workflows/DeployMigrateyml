@@ -1,13 +1,13 @@
-name: Manual deploy to movieapp-acc
+name: Deploy to movieapp-dev
 
 on:
   workflow_dispatch
 
 jobs:
   def:
-    name: Deploy to Staging
+    name: Deploy to movieapp-dev
     runs-on: ubuntu-latest
-    environment: Staging
+    environment: Development
 
     steps:
     - uses: actions/checkout@v2
@@ -17,17 +17,18 @@ jobs:
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_email: plazo1975@gmail.com
-        heroku_app_name: movieapp-acc
-        branch: staging
+        heroku_app_name: movieapp-dev
+        branch: develop
         dontuseforce: false
         dontautocreate: true
         usedocker: false
         docker_heroku_process_type: web
         region: Europe
         stack: heroku-20
-    - name: Flyway Migration
+    
+    - name: Database migration
       uses: joshuaavalon/flyway-action@v2
-      with: 
+      with:
        url: jdbc:postgresql://${{secrets.DB_HOST}}:5432/${{secrets.DB_NAME}}
        user: ${{secrets.DB_USER}}
        password: ${{secrets.DB_PASS}}

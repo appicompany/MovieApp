@@ -25,3 +25,11 @@ jobs:
         docker_heroku_process_type: web
         region: Europe
         stack: heroku-20
+        
+    - name: Flyway Migration
+      uses: joshuaavalon/flyway-action@v2
+      with: 
+       url: jdbc:postgresql://${{secrets.DB_HOST}}:5432/${{secrets.DB_NAME}}
+       user: ${{secrets.DB_USER}}
+       password: ${{secrets.DB_PASS}}
+       locations: "filesystem:migrations"
