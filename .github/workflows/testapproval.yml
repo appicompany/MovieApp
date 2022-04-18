@@ -35,6 +35,10 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    - uses: trstringer/manual-approval@v1
+      with:
+          secret: ${{ github.TOKEN }}
+          approvers: plazo1975
     # Runs a single command using the runners shell
     - name: Send greeting
       run: echo "Hello ${{ github.event.inputs.name }}"
