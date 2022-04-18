@@ -1,0 +1,35 @@
+name: Deploy to movieapp-dev
+
+on:
+  workflow_dispatch
+
+jobs:
+  def:
+    name: Deploy to movieapp-dev
+    runs-on: ubuntu-latest
+    environment: Development
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Deploy to Heroku
+      uses: AkhileshNS/heroku-deploy@v3.12.12
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_email: plazo1975@gmail.com
+        heroku_app_name: movieapp-dev
+        branch: develop
+        dontuseforce: false
+        dontautocreate: true
+        usedocker: false
+        docker_heroku_process_type: web
+        region: Europe
+        stack: heroku-20
+    
+    - name: Database migration
+      uses: joshuaavalon/flyway-action@v2
+      with:
+       url: jdbc:postgresql://${{secrets.DB_HOST}}:5432/${{secrets.DB_NAME}}
+       user: ${{secrets.DB_USER}}
+       password: ${{secrets.DB_PASS}}
+       locations: "filesystem:migrations"
