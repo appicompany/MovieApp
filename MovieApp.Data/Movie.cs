@@ -12,11 +12,11 @@ namespace MovieApp.Data
         public int Id { get; set; } 
         [Required]
 
-        public string Title { get; set; }   
+        public string? Title { get; set; }   
         public int Year { get; set; }
-        public string Summary { get; set; } 
+        public string? Summary { get; set; } 
         [MaxLength(3)]
-        public List<Actor> Actors { get; set; }
+        public List<Actor>? Actors { get; set; }
 
     }
 
@@ -24,7 +24,7 @@ namespace MovieApp.Data
     {
         public int Id { get; set; }
         [Required]
-        public string FullName { get; set; }    
+        public string? FullName { get; set; }    
     }
 }
 
